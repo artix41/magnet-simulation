@@ -1,8 +1,14 @@
 import SimulationObject from './simulationObject';
 
 export default class Engine extends SimulationObject {
-    constructor(name, properties) {
-        super(name, properties);
+    constructor() {
+        super();
         this.className = 'Engine';
+        this.magnet = undefined;
+    }
+
+    addMagnet(magnet) {
+        this.magnet = magnet;
+        this.emit("MagnetAdded", { magnet });
     }
 }

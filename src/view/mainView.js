@@ -1,10 +1,13 @@
 import RenderingContext from './renderingContext';
+import EngineViewMediator from './mediator/engineViewMediator';
+import ViewMediatorFactory from './viewMediatorFactory';
 
 export default class MainView {
     constructor(controller, engine) {
         this.controller = controller;
         this.engine = engine;
         this.renderingContext = this.createRenderingContext();
+        this.engineViewMediator = new EngineViewMediator(engine, new ViewMediatorFactory);
     }
 
     createRenderingContext() {
@@ -16,10 +19,16 @@ export default class MainView {
     }
 
     initialize() {
+        const scene = this.renderingContext.scene;
+        const object3D = this.engineViewMediator.object3D;
+
+        scene.add(object3D);
+
         this.render();
     }
 
     render() {
+        this.renderingContext.controls.update();
         requestAnimationFrame(() => this.render());
         this.renderingContext.renderer.render(this.renderingContext.scene, this.renderingContext.camera);
     }

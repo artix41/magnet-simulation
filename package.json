@@ -24,6 +24,8 @@
   },
   "dependencies": {
     "http-server": "^0.10.0",
+    "lodash": "^4.17.4",
+    "mathjs": "^3.16.3",
     "three": "^0.87.1"
   }
 }

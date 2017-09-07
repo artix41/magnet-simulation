@@ -1,9 +1,7 @@
 import Observable from '../observable';
 
 export default class SimulationObject extends Observable {
-    constructor(name, properties = {}) {
+    constructor() {
         super();
-        this.name = name;
-        this.properties = properties;
     }
 }
