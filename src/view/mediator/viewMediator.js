@@ -20,14 +20,17 @@ export default class ViewMediator extends Observable {
     }
 
     addChild(child) {
+        // get the mediator of the child and save it (for rendering and removing purpose)
         const mediator = this.mediatorFactory.getMediator(child);
-
         this.childMediators.set(child, mediator);
+
+
         this.object3D.children[0].add(mediator.object3D);
 
-        for (const childofChild of child) {
-            mediator.addChild(childofChild);
-        }
+        // console.log("Child", child)
+        // for (const childofChild of child) {
+        //     mediator.addChild(childofChild);
+        // }
     }
 
     removeChild(child) {

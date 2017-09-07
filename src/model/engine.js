@@ -1,4 +1,5 @@
 import SimulationObject from './simulationObject';
+import Magnet from './magnet'
 
 export default class Engine extends SimulationObject {
     constructor() {
@@ -10,5 +11,9 @@ export default class Engine extends SimulationObject {
     addMagnet(magnet) {
         this.magnet = magnet;
         this.emit("MagnetAdded", { magnet });
+    }
+
+    [Symbol.iterator]() {
+        return [];
     }
 }

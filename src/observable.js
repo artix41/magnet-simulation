@@ -10,7 +10,6 @@ export default class Observable {
 
     emit(label, e) {
         const observers = this.observers.get(label);
-
         if (observers && observers.length) {
             observers.forEach((callback) => {
                 callback(e);
