@@ -24,6 +24,8 @@ export default class MainView {
 
         scene.add(object3D);
 
+        window.addEventListener('resize', (e) => this.onWindowResize(), false);
+
         this.render();
     }
 
