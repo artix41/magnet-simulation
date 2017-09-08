@@ -15,7 +15,7 @@ export default class MagnetViewMediator extends ViewMediator {
         const mesh = new THREE.Mesh(geometry, material);
 
         container.add(mesh);
-        mesh.position.setY(this.simulationObject.size.z / 2);
+        mesh.position.setY(this.simulationObject.size.z / 2 + 100);
         return container;
     }
 

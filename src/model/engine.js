@@ -6,6 +6,11 @@ export default class Engine extends SimulationObject {
         super();
         this.className = 'Engine';
         this.magnet = undefined;
+        this.maxTemperature = 100;
+        this.temperature = {
+            left: this.maxTemperature,
+            right: 0
+        }
     }
 
     addMagnet(magnet) {
