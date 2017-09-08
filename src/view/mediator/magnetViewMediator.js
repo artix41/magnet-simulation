@@ -4,6 +4,9 @@ export default class MagnetViewMediator extends ViewMediator {
     constructor(magnet, mediatorFactory) {
         super(magnet, mediatorFactory);
         this.simulationObject.addObserver("ParticuleAdded", (e) => this.onParticuleAdded(e));
+        this.then = Date.now();
+        this.fps = 1;
+        this.interval = 1000 / this.fps;
     }
 
     makeObject3D() {
@@ -57,20 +60,26 @@ export default class MagnetViewMediator extends ViewMediator {
     }
 
     onFrameRenderered() {
-        const matrixParticules = this.simulationObject.matrixParticules;
-        const nbParticules = this.simulationObject.nbParticules;
+        const now = Date.now();
+        const delta = now - this.then;
+        this.simulationObject.thetaPoint -= 0.001
+        this.object3D.children[0].rotation.z += this.simulationObject.thetaPoint;
 
-        for(var x = 0; x < nbParticules.x; x++) {
-            for(var y = 0; y < nbParticules.y; y++) {
-                for(var z = 0; z < nbParticules.z; z++) {
-                    matrixParticules[x][y][z].spin = 2*+(Math.random() > 0.5) - 1;
+        if (delta > this.interval) {
+            this.then = now - (delta % this.interval);
+            const matrixParticules = this.simulationObject.matrixParticules;
+            const nbParticules = this.simulationObject.nbParticules;
+
+            for(var x = 0; x < nbParticules.x; x++) {
+                for(var y = 0; y < nbParticules.y; y++) {
+                    for(var z = 0; z < nbParticules.z; z++) {
+                        matrixParticules[x][y][z].spin = 2*+(Math.random() > 0.5) - 1;
+                    }
                 }
             }
+            for (const childMediator of this.childMediators.values()) {
+                childMediator.onFrameRenderered();
+            }
         }
-        for (const childMediator of this.childMediators.values()) {
-            childMediator.onFrameRenderered();
-        }
-
-        this.object3D.children[0].rotation.z += 0.1;
     }
 }

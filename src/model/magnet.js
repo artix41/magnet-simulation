@@ -9,6 +9,7 @@ export default class Magnet extends SimulationObject {
         this.size = size;
         this.nbParticules = nbParticules;
         this.position = position;
+        this.thetaPoint = 0.1;
 
         this.matrixParticules = _.times(nbParticules.x,0).map(function() {
             return _.times(nbParticules.y, 0).map(function () {
