@@ -11,31 +11,42 @@ export default class RenderingContext {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight), 1, 10000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        const controls = new THREE.TrackballControls(camera);
-        const light = new THREE.DirectionalLight(0xf9f1c2, 1);
+        const controls = new THREE.OrbitControls(camera, containerElement);
+        controls.target.set(0, 1, 0);
+        const light1 = new THREE.DirectionalLight(0xf9f1c2, 0.5);
+        const light2 = new THREE.DirectionalLight(0xf9f1c2, 0.5);
+        const light3 = new THREE.PointLight(0xffffff, 1, 1000);
+        const light4 = new THREE.PointLight(0xffffff, 1, 1000);
+
         const SPACE = 40, L = 8;
 
-        scene.fog = new THREE.FogExp2(0x9db3b5, 0.0008);
+        scene.fog = new THREE.FogExp2(0x9db3b5, 0.0005);
 
 		camera.position.x = 0;
-		camera.position.y = SPACE*L;
-		camera.position.z = SPACE*L*1.5;
+		camera.position.y = 500;
+		camera.position.z = 1000;
 
         renderer.setSize(width, height);
         renderer.shadowMap.enabled = true;
 
-        light.position.set(500, 1500, 1000);
-		light.castShadow = true;
-		light.shadow.mapSize.width = 2048;
-		light.shadow.mapSize.height = 2048;
-		var d = 1000;
-		light.shadow.camera.left = d;
-		light.shadow.camera.right = -d;
-		light.shadow.camera.top = d;
-		light.shadow.camera.bottom = -d;
-		light.shadow.camera.far = 2500;
+        light1.position.set(500, 1500, 1000);
+        light2.position.set(-500, 1500, 1000);
+        light3.position.set(500,300,0);
+        light4.position.set(-500,300,0);
+		// light1.castShadow = true;
+		// light1.shadow.mapSize.width = 2048;
+		// light1.shadow.mapSize.height = 2048;
+		// var d = 1000;
+		// light1.shadow.camera.left = d;
+		// light1.shadow.camera.right = -d;
+		// light1.shadow.camera.top = d;
+		// light1.shadow.camera.bottom = -d;
+		// light1.shadow.camera.far = 2500;
 
-        scene.add(light);
+        scene.add(light1);
+        scene.add(light2);
+        scene.add(light3);
+        scene.add(light4);
 
         containerElement.appendChild(renderer.domElement);
 

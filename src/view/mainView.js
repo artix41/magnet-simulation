@@ -8,6 +8,9 @@ export default class MainView {
         this.engine = engine;
         this.renderingContext = this.createRenderingContext();
         this.engineViewMediator = new EngineViewMediator(engine, new ViewMediatorFactory);
+        this.then = Date.now();
+        this.fps = 2;
+        this.interval = 1000 / this.fps;
     }
 
     createRenderingContext() {
@@ -31,7 +34,16 @@ export default class MainView {
 
     render() {
         this.renderingContext.controls.update();
+
         requestAnimationFrame(() => this.render());
+
+        const now = Date.now();
+        const delta = now - this.then;
+        if (delta > this.interval) {
+            this.then = now - (delta % this.interval);
+            this.engineViewMediator.onFrameRenderered();
+        }
+
         this.renderingContext.renderer.render(this.renderingContext.scene, this.renderingContext.camera);
     }
 
