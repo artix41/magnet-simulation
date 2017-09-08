@@ -2,17 +2,17 @@ import SimulationObject from './simulationObject';
 import Particule from './particule';
 
 export default class Magnet extends SimulationObject {
-    constructor(size, nbParticules) {
+    constructor(size, position, nbParticules) {
         super();
         this.className = 'Magnet';
 
         this.size = size;
         this.nbParticules = nbParticules;
+        this.position = position;
 
-        var obj = this;
-        this.matrixParticules = _.times(this.nbParticules.x,0).map(function() {
-            return _.times(obj.nbParticules.y, 0).map(function () {
-                return _.times(obj.nbParticules.z, 0);
+        this.matrixParticules = _.times(nbParticules.x,0).map(function() {
+            return _.times(nbParticules.y, 0).map(function () {
+                return _.times(nbParticules.z, 0);
             });
         });
     }
@@ -27,7 +27,7 @@ export default class Magnet extends SimulationObject {
                 for (var z = 0; z < this.nbParticules.z; z++) {
                     const position = {
                         x: length + x*marginX - this.size.x / 2,
-                        y: 5 + y*marginY - this.size.y / 2,
+                        y: 5 + y*marginY - this.size.y / 2 - this.engine.sizeRope.length,
                         z: 2 + z*marginZ - this.size.z / 2
                     };
                     const particule = new Particule(2*+(Math.random() > 0.5) - 1, position);
@@ -37,6 +37,7 @@ export default class Magnet extends SimulationObject {
                 }
             }
         }
+        console.log(this.engine)
     }
 
     [Symbol.iterator]() {
