@@ -64,7 +64,7 @@ export default class EngineViewMediator extends ViewMediator {
         const metal = new THREE.Mesh(geometry, material);
 
         metal.position.setY(this.simulationObject.sizeMetal.y / 2);
-        metal.position.setX(-this.simulationObject.sizeFloor.x / 2 + this.simulationObject.sizeThermos.x + 150);
+        metal.position.setX(-this.simulationObject.sizeFloor.x / 2 + this.simulationObject.sizeThermos.x + this.simulationObject.positionMetal.x);
         metal.position.setZ(0);
 
         return metal;
@@ -73,10 +73,10 @@ export default class EngineViewMediator extends ViewMediator {
     createGUI() {
         var gui = new dat.GUI({width: 400});
         var obj = this;
-		gui.add(this.temperature, 'left', 0,100).step(1).name('Left Temperature').onFinishChange(function() {
+		gui.add(this.temperature, 'left', 0,this.simulationObject.maxTemperature).step(1).name('Left Temperature').onFinishChange(function() {
             obj.onTemperatureChange('left');
         });
-        gui.add(this.temperature, 'right', 0,100).step(1).name('Right Temperature').onFinishChange(function() {
+        gui.add(this.temperature, 'right', 0,this.simulationObject.maxTemperature).step(1).name('Right Temperature').onFinishChange(function() {
             obj.onTemperatureChange('right');
         });;
     }

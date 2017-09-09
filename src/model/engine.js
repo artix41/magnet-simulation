@@ -15,6 +15,7 @@ export default class Engine extends SimulationObject {
         this.nbParticules = {x:12, y:6, z:6};
         this.sizeThermos = {x: 10, y: 500, z: this.sizeFloor.z};
         this.sizeMetal = {x: 20, y: this.sizeThermos.y * 0.9, z: this.sizeFloor.z / 2};
+        this.positionMetal = {x: 300, y: 0, z: 0};
         this.sizeRope = {radius: 3, length: this.sizeThermos.y - this.sizeMagnet.y - 100};
     }
 

@@ -72,7 +72,7 @@ export default class MagnetViewMediator extends ViewMediator {
         const delta = now - this.then;
         if (delta > this.dt) {
             this.then = now - (delta % this.dt);
-            this.simulationObject.magnetization = this.changeSpins();
+            this.simulationObject.setMagnetization(this.changeSpins());
             this.simulationObject.temperature = this.simulationObject.engine.getTemperatureField(this.simulationObject.position.x);
         }
 
@@ -87,7 +87,7 @@ export default class MagnetViewMediator extends ViewMediator {
         const object3D = this.object3D.children[0];
         const magnet = this.simulationObject;
 
-        const F = -40;
+        const force = magnet.force;
         const g = 100;
         const l = magnet.engine.sizeRope.length;
         const m = magnet.mass;
@@ -96,7 +96,7 @@ export default class MagnetViewMediator extends ViewMediator {
         const h = 0.2;
 
         const nextTheta = this.newtonSolver(function(x) {
-            return x + prevTheta - 2 * theta - h*h * (F/(m*l) * Math.cos(x) - g / l * Math.sin(x));
+            return x + prevTheta - 2 * theta - h*h * (force/(m*l) * Math.cos(x) - g / l * Math.sin(x));
         }, h, Math.PI * 2 - h, theta+h, 10);
         //console.log(nextTheta);
 
@@ -107,18 +107,31 @@ export default class MagnetViewMediator extends ViewMediator {
     }
 
     changeSpins() {
-        const matrixParticules = this.simulationObject.matrixParticules;
+        var matrixParticules = this.simulationObject.matrixParticules;
         const nbParticules = this.simulationObject.nbParticules;
-
+        const J = this.simulationObject.couplingConstant;
+        const temperature = this.simulationObject.temperature;
+        const kb = this.simulationObject.kb;
         var magnetization = 0;
         for(var x = 0; x < nbParticules.x; x++) {
             for(var y = 0; y < nbParticules.y; y++) {
                 for(var z = 0; z < nbParticules.z; z++) {
-                    matrixParticules[x][y][z].spin = 2*+(Math.random() > 0.5) - 1;
-                    magnetization += matrixParticules[x][y][z].spin
+                    var sumNeighbours = 0;
+                    for (var dep of [-1,1]) {
+                        sumNeighbours += matrixParticules[(x+dep+nbParticules.x)%nbParticules.x][y][z].spin;
+                        sumNeighbours += matrixParticules[x][(y+dep+nbParticules.y)%nbParticules.y][z].spin;
+                        sumNeighbours += matrixParticules[x][y][(z+dep+nbParticules.z)%nbParticules.z].spin;
+                    }
+                    var deltaEnergy = matrixParticules[x][y][z].spin * 2 * J * sumNeighbours;
+                    var beta = 1 / (kb * temperature);
+                    if (deltaEnergy < 0 || Math.random() < Math.exp(-beta * deltaEnergy)) {
+                        matrixParticules[x][y][z].spin *= -1;
+                    }
+                    magnetization += matrixParticules[x][y][z].spin;
                 }
             }
         }
+
         magnetization /= nbParticules.x * nbParticules.y * nbParticules.z;
 
         for (const childMediator of this.childMediators.values()) {
@@ -129,7 +142,7 @@ export default class MagnetViewMediator extends ViewMediator {
 
     newtonSolver(f, a, b, xInit, nbIter) {
         var x = xInit;
-        var h = 0.000001
+        var h = 0.000001;
         for (var iter=0; iter < nbIter; iter++) {
             var fx = f(x);
             var fprimex = (f(x+h)-f(x))/h;
