@@ -9,7 +9,7 @@ export default class MainView {
         this.renderingContext = this.createRenderingContext();
         this.engineViewMediator = new EngineViewMediator(engine, new ViewMediatorFactory);
         this.then = Date.now();
-        this.fps = 50;
+        this.fps = 100;
         this.interval = 1000 / this.fps;
     }
 

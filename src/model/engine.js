@@ -1,5 +1,5 @@
 import SimulationObject from './simulationObject';
-import Magnet from './magnet'
+import Magnet from './magnet';
 
 export default class Engine extends SimulationObject {
     constructor() {

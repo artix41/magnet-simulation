@@ -53,7 +53,7 @@ export default class EngineViewMediator extends ViewMediator {
         thermos.position.setX(positionX);
         thermos.position.setZ(0);
 
-        return thermos
+        return thermos;
     }
 
     createMetal() {
@@ -66,7 +66,7 @@ export default class EngineViewMediator extends ViewMediator {
         metal.position.setX(-this.simulationObject.sizeFloor.x / 2 + this.simulationObject.sizeThermos.x + 150);
         metal.position.setZ(0);
 
-        return metal
+        return metal;
     }
 
     createGUI() {

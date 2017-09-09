@@ -1,4 +1,5 @@
 import ViewMediator from './viewMediator';
+//import 'nsolvejs';
 
 export default class MagnetViewMediator extends ViewMediator {
     constructor(magnet, mediatorFactory) {
@@ -6,7 +7,11 @@ export default class MagnetViewMediator extends ViewMediator {
         this.simulationObject.addObserver("ParticuleAdded", (e) => this.onParticuleAdded(e));
         this.then = Date.now();
         this.fps = 1;
-        this.interval = 1000 / this.fps;
+        this.dt = 1000 / this.fps;
+
+        function f(x) {
+            return x-Math.cos(x) ;
+        }
     }
 
     makeObject3D() {
@@ -60,26 +65,65 @@ export default class MagnetViewMediator extends ViewMediator {
     }
 
     onFrameRenderered() {
+        this.changeMotion();
+
         const now = Date.now();
         const delta = now - this.then;
-        this.simulationObject.thetaPoint -= 0.001
-        this.object3D.children[0].rotation.z += this.simulationObject.thetaPoint;
+        if (delta > this.dt) {
+            this.then = now - (delta % this.dt);
+            this.changeSpins();
+        }
+    }
 
-        if (delta > this.interval) {
-            this.then = now - (delta % this.interval);
-            const matrixParticules = this.simulationObject.matrixParticules;
-            const nbParticules = this.simulationObject.nbParticules;
+    changeMotion() {
+        //this.simulationObject.thetaPoint -= 0.
+        const object3D = this.object3D.children[0];
+        const magnet = this.simulationObject;
 
-            for(var x = 0; x < nbParticules.x; x++) {
-                for(var y = 0; y < nbParticules.y; y++) {
-                    for(var z = 0; z < nbParticules.z; z++) {
-                        matrixParticules[x][y][z].spin = 2*+(Math.random() > 0.5) - 1;
-                    }
+        const F = 40;
+        const g = 100;
+        const l = magnet.engine.sizeRope.length;
+        const m = magnet.mass;
+        const prevTheta = magnet.prevTheta;
+        const theta = magnet.theta;
+        const h = 0.2;
+
+        const nextTheta = this.newtonSolver(function(x) {
+            return x + prevTheta - 2 * theta - h*h * (F/(m*l) * Math.cos(x) - g / l * Math.sin(x));
+        }, h, Math.PI * 2 - h, theta+h, 10);
+        console.log(nextTheta);
+
+        magnet.prevTheta = magnet.theta;
+        magnet.theta = nextTheta;
+        object3D.rotation.z = magnet.theta;
+        object3D.rotation.z %= 2 * Math.PI;
+    }
+
+    changeSpins() {
+
+        const matrixParticules = this.simulationObject.matrixParticules;
+        const nbParticules = this.simulationObject.nbParticules;
+
+        for(var x = 0; x < nbParticules.x; x++) {
+            for(var y = 0; y < nbParticules.y; y++) {
+                for(var z = 0; z < nbParticules.z; z++) {
+                    matrixParticules[x][y][z].spin = 2*+(Math.random() > 0.5) - 1;
                 }
             }
-            for (const childMediator of this.childMediators.values()) {
-                childMediator.onFrameRenderered();
-            }
         }
+        for (const childMediator of this.childMediators.values()) {
+            childMediator.onFrameRenderered();
+        }
+    }
+
+    newtonSolver(f, a, b, xInit, nbIter) {
+        var x = xInit;
+        var h = 0.000001
+        for (var iter=0; iter < nbIter; iter++) {
+            var fx = f(x);
+            var fprimex = (f(x+h)-f(x))/h;
+            x -= fx/fprimex;
+        }
+        return x;
     }
 }

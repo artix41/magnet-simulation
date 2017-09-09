@@ -4,10 +4,12 @@ import resolve from 'rollup-plugin-node-resolve'; // to import node_modules pack
 import commonjs from 'rollup-plugin-commonjs'; // convert commonjs to es6 (in case you use require)
 
 export default {
-  entry: 'src/main.js',
-  dest: 'build/index.js',
-  format: 'iife',
-  sourceMap: 'inline',
+  input: 'src/main.js',
+  output: {
+      file:'build/index.js',
+      format: 'iife'
+  },
+  sourcemap: 'inline',
   plugins: [
     resolve({
       jsnext: true,
