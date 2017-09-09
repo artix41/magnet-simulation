@@ -91,7 +91,7 @@ export default class MagnetViewMediator extends ViewMediator {
         const nextTheta = this.newtonSolver(function(x) {
             return x + prevTheta - 2 * theta - h*h * (F/(m*l) * Math.cos(x) - g / l * Math.sin(x));
         }, h, Math.PI * 2 - h, theta+h, 10);
-        console.log(nextTheta);
+        //console.log(nextTheta);
 
         magnet.prevTheta = magnet.theta;
         magnet.theta = nextTheta;

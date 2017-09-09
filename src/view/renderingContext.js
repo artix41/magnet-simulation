@@ -12,7 +12,7 @@ export default class RenderingContext {
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight), 1, 10000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         const controls = new THREE.OrbitControls(camera, containerElement);
-        controls.target.set(0, 1, 0);
+        controls.target.set(0, 200, 0);
         const light1 = new THREE.DirectionalLight(0xf9f1c2, 0.5);
         const light2 = new THREE.DirectionalLight(0xf9f1c2, 0.5);
         const light3 = new THREE.PointLight(0xffffff, 1, 1000);
@@ -24,7 +24,7 @@ export default class RenderingContext {
 
 		camera.position.x = 0;
 		camera.position.y = 500;
-		camera.position.z = 1000;
+		camera.position.z = 800;
 
         renderer.setSize(width, height);
         renderer.shadowMap.enabled = true;
