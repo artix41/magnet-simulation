@@ -28,6 +28,7 @@ export default class EngineViewMediator extends ViewMediator {
 
     onMagnetAdded(e) {
         e.magnet.engine = this.simulationObject;
+        e.magnet.temperature = this.simulationObject.getTemperatureField(e.magnet.position.x);
         this.addChild(e.magnet);
     }
 

@@ -3,3 +3,13 @@ body {
     overflow: hidden;
     background-color: #d7f0f7;
 }
+
+#panel {
+    z-index:30;
+    width: 200px;
+    padding:5px;
+    background-color: #d7f0f7;
+    color: #000;
+    font-size: 18px;
+    line-height: 1.2;
+}

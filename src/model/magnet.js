@@ -12,6 +12,8 @@ export default class Magnet extends SimulationObject {
         this.mass = 1;
         this.theta = 0;
         this.prevTheta = 0;
+        this.magnetization = 0;
+        this.temperature = 0;
 
         this.matrixParticules = _.times(nbParticules.x,0).map(function() {
             return _.times(nbParticules.y, 0).map(function () {

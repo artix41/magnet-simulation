@@ -24,7 +24,8 @@ export default class Engine extends SimulationObject {
     }
 
     getTemperatureField(x) {
-        return this.temperature.left + x * (this.temperature.right - this.temperature.left) / this.sizeFloor.x;
+        const Tl = this.temperature.left, Tr = this.temperature.right;
+        return  (Tr + Tl) / 2 + x * (Tr - Tl) / this.sizeFloor.x;
     }
 
     [Symbol.iterator]() {

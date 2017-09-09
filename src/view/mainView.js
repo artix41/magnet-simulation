@@ -1,11 +1,13 @@
 import RenderingContext from './renderingContext';
 import EngineViewMediator from './mediator/engineViewMediator';
 import ViewMediatorFactory from './viewMediatorFactory';
+import DescriptionPanel from './controls/descriptionPanel';
 
 export default class MainView {
     constructor(controller, engine) {
         this.controller = controller;
         this.engine = engine;
+        this.descriptionPanel = new DescriptionPanel();
         this.renderingContext = this.createRenderingContext();
         this.engineViewMediator = new EngineViewMediator(engine, new ViewMediatorFactory);
         this.then = Date.now();
@@ -26,6 +28,8 @@ export default class MainView {
         const object3D = this.engineViewMediator.object3D;
 
         scene.add(object3D);
+
+        this.engine.magnet.addObserver('PositionChange', (e) => this.controller.setDescriptionPanelText(e.temperature, e.magnetization));
 
         window.addEventListener('resize', (e) => this.onWindowResize(), false);
 

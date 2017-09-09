@@ -66,13 +66,20 @@ export default class MagnetViewMediator extends ViewMediator {
 
     onFrameRenderered() {
         this.changeMotion();
+        this.simulationObject.position.x = this.simulationObject.engine.sizeRope.length * Math.sin(this.object3D.children[0].rotation.z);
 
         const now = Date.now();
         const delta = now - this.then;
         if (delta > this.dt) {
             this.then = now - (delta % this.dt);
-            this.changeSpins();
+            this.simulationObject.magnetization = this.changeSpins();
+            this.simulationObject.temperature = this.simulationObject.engine.getTemperatureField(this.simulationObject.position.x);
         }
+
+        this.simulationObject.emit("PositionChange", {
+            temperature: this.simulationObject.temperature,
+            magnetization: this.simulationObject.magnetization
+        })
     }
 
     changeMotion() {
@@ -80,7 +87,7 @@ export default class MagnetViewMediator extends ViewMediator {
         const object3D = this.object3D.children[0];
         const magnet = this.simulationObject;
 
-        const F = 40;
+        const F = -40;
         const g = 100;
         const l = magnet.engine.sizeRope.length;
         const m = magnet.mass;
@@ -100,20 +107,24 @@ export default class MagnetViewMediator extends ViewMediator {
     }
 
     changeSpins() {
-
         const matrixParticules = this.simulationObject.matrixParticules;
         const nbParticules = this.simulationObject.nbParticules;
 
+        var magnetization = 0;
         for(var x = 0; x < nbParticules.x; x++) {
             for(var y = 0; y < nbParticules.y; y++) {
                 for(var z = 0; z < nbParticules.z; z++) {
                     matrixParticules[x][y][z].spin = 2*+(Math.random() > 0.5) - 1;
+                    magnetization += matrixParticules[x][y][z].spin
                 }
             }
         }
+        magnetization /= nbParticules.x * nbParticules.y * nbParticules.z;
+
         for (const childMediator of this.childMediators.values()) {
             childMediator.onFrameRenderered();
         }
+        return magnetization;
     }
 
     newtonSolver(f, a, b, xInit, nbIter) {
