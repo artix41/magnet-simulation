@@ -73,13 +73,12 @@ export default class MagnetViewMediator extends ViewMediator {
         if (delta > this.dt) {
             this.then = now - (delta % this.dt);
             this.simulationObject.setMagnetization(this.changeSpins());
-            this.simulationObject.temperature = this.simulationObject.engine.getTemperatureField(this.simulationObject.position.x);
         }
 
         this.simulationObject.emit("PositionChange", {
-            temperature: this.simulationObject.temperature,
+            temperature: this.simulationObject.engine.temperature,
             magnetization: this.simulationObject.magnetization
-        })
+        });
     }
 
     changeMotion() {
@@ -110,7 +109,7 @@ export default class MagnetViewMediator extends ViewMediator {
         var matrixParticules = this.simulationObject.matrixParticules;
         const nbParticules = this.simulationObject.nbParticules;
         const J = this.simulationObject.couplingConstant;
-        const temperature = this.simulationObject.temperature;
+        const temperature = this.simulationObject.engine.temperature;
         const kb = this.simulationObject.kb;
         var magnetization = 0;
         for(var x = 0; x < nbParticules.x; x++) {

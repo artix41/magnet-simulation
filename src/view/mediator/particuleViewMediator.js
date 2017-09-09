@@ -10,7 +10,7 @@ export default class ParticuleViewMediator extends ViewMediator {
 
         const magnet = this.simulationObject.magnet;
         const length = magnet.size.x / (magnet.nbParticules.x+2);
-        const radius = 5;
+        const radius = 4;
 
         var geometry = new THREE.CylinderGeometry(0, radius, length, 16, 2);
 		//geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, length/2, 0));

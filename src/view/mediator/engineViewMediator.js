@@ -9,10 +9,9 @@ export default class EngineViewMediator extends ViewMediator {
         const floor = this.createFloor();
         this.object3D.add(floor);
 
-        this.temperature = this.simulationObject.temperature;
         this.scaleTemperature = chroma.scale(["blue", "white", "red"]).mode('hsl');
-        this.thermosLeft = this.createThermostat(this.temperature.left, -this.simulationObject.sizeFloor.x / 2 + this.simulationObject.sizeThermos.x / 2);
-        this.thermosRight = this.createThermostat(this.temperature.right, this.simulationObject.sizeFloor.x / 2 - this.simulationObject.sizeThermos.x / 2);
+        this.thermosLeft = this.createThermostat(this.simulationObject.temperature, -this.simulationObject.sizeFloor.x / 2 + this.simulationObject.sizeThermos.x / 2);
+        this.thermosRight = this.createThermostat(this.simulationObject.temperature, this.simulationObject.sizeFloor.x / 2 - this.simulationObject.sizeThermos.x / 2);
         this.object3D.add(this.thermosLeft);
         this.object3D.add(this.thermosRight);
 
@@ -28,7 +27,6 @@ export default class EngineViewMediator extends ViewMediator {
 
     onMagnetAdded(e) {
         e.magnet.engine = this.simulationObject;
-        e.magnet.temperature = this.simulationObject.getTemperatureField(e.magnet.position.x);
         this.addChild(e.magnet);
     }
 
@@ -73,21 +71,17 @@ export default class EngineViewMediator extends ViewMediator {
     createGUI() {
         var gui = new dat.GUI({width: 400});
         var obj = this;
-		gui.add(this.temperature, 'left', 0,this.simulationObject.maxTemperature).step(1).name('Left Temperature').onFinishChange(function() {
-            obj.onTemperatureChange('left');
+		gui.add(this.simulationObject, 'temperature', 0,this.simulationObject.maxTemperature).step(1).name('Temperature').onFinishChange(function() {
+            obj.onTemperatureChange();
         });
-        gui.add(this.temperature, 'right', 0,this.simulationObject.maxTemperature).step(1).name('Right Temperature').onFinishChange(function() {
-            obj.onTemperatureChange('right');
-        });;
     }
 
     onTemperatureChange(side) {
-        const thermos = (side == 'left') ? this.thermosLeft : this.thermosRight;
-        const temperature = (side == 'left') ? this.temperature.left : this.temperature.right;
-
-        const newColor = this.scaleTemperature(temperature / this.simulationObject.maxTemperature);
+        const newColor = this.scaleTemperature(this.simulationObject.temperature / this.simulationObject.maxTemperature);
         const newColorHex = newColor.get('rgb.r')*16*16*16*16 + newColor.get('rgb.g')*16*16 + newColor.get('rgb.b');
-        thermos.material.color.setHex(newColorHex);
+        this.thermosLeft.material.color.setHex(newColorHex);
+        this.thermosRight.material.color.setHex(newColorHex);
+        console.log(this.simulationObject.temperature);
     }
 
     onFrameRenderered() {
