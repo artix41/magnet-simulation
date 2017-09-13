@@ -13,7 +13,32 @@
                 <div class="dropdown-menu">
                     <h1>Ising Model</h1>
                     <p>
-                        Paragraph 1 lorem ipsum
+                        The model used to explain this phenomenon is called the <strong>Ising Model</strong>:
+                        all the micro-magnets represent the spin of the atoms and increasing the temperature
+                        also increases the entropy − or disorder − of the system.
+                        On the contrary, when you decrease the temperature, atoms are less agitated and
+                        tend to align their spin with their neighborhood.
+                    </p>
+                    <p>
+                        More mathematically, we can prove that any system at a fixed temperature $T$ tends to
+                        minimize his Gibbs free energy, given by $G = H - TS$, where $H$ is the enthalpy of
+                        the system and S its entropy. When the temperature is low, minimizing $G$ essentially
+                        means minimizing H, while a high temperature makes increases the role of entropy,
+                        and the negative signs means $G$ will be minimized for a high entropy.
+                        The Ising model consists in having an expression for the enthalpy only taking into
+                        account interactions between each atom and its direct neighborhood (long-range interactions are neglected).
+                        This expression has to be minimum when all the spins are aligned, and maximum in the most disordered case.
+                        The simplest expression respecting those conditions is given by :
+                        \[
+                        H = - J \sum_{i,j \: neighbors} S_i S_j
+                        \]
+                        where $S_i$ is the spin of atom $i$ and $J$ a couping constant.
+                    </p>
+                    <p>
+                        This program simulates the Ising model using a Monte Carlo algorithm called
+                        <a href="https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm">Metropolis</a>,
+                        consisting essentially in mixing randomly the spins at each iteration, and accepting the new situation
+                        only if its free energy is lower than before.
                     </p>
                 </div>
             </div>
@@ -24,6 +49,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.min.js"></script>
         <script src="node_modules/jquery/dist/jquery.min.js"></script>
         <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
         <script type="text/javascript">
             $('.dropdown').on('show.bs.dropdown', function() {
                 $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
@@ -38,7 +64,20 @@
                 }
             });
         </script>
-
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                showMathMenu: false,
+                extensions: ["tex2jax.js"],
+                jax: ["input/TeX", "output/HTML-CSS"],
+                tex2jax: {
+                  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                  processEscapes: true
+                },
+                "HTML-CSS": { availableFonts: ["TeX"] }
+            });
+        </script>
+        <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
         <script src="build/index.js"></script>
     </body>
 </html>
