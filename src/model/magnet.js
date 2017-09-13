@@ -1,5 +1,6 @@
 import SimulationObject from './simulationObject';
 import Particule from './particule';
+import _ from 'lodash';
 
 export default class Magnet extends SimulationObject {
     constructor(size, position, nbParticules) {
@@ -50,7 +51,6 @@ export default class Magnet extends SimulationObject {
                 }
             }
         }
-        console.log(this.engine);
     }
 
     [Symbol.iterator]() {

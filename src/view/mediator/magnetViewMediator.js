@@ -15,7 +15,6 @@ export default class MagnetViewMediator extends ViewMediator {
     }
 
     makeObject3D() {
-        console.log(this.simulationObject.engine);
         this.rope = this.createRope(-this.simulationObject.engine.sizeRope.length, 0);
 
         this.pivot = this.createPivot(this.simulationObject.engine.sizeThermos.y);
@@ -97,7 +96,6 @@ export default class MagnetViewMediator extends ViewMediator {
         const nextTheta = this.newtonSolver(function(x) {
             return x + prevTheta - 2 * theta - h*h * (force/(m*l) * Math.cos(x) - g / l * Math.sin(x));
         }, h, Math.PI * 2 - h, theta+h, 10);
-        //console.log(nextTheta);
 
         magnet.prevTheta = magnet.theta;
         magnet.theta = nextTheta;

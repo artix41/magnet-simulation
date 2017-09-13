@@ -17,7 +17,7 @@ export default {
       browser: true
     }),
     commonjs({
-        include: 'src/**'
+        include: ['node_modules/**']
     }),
     eslint({
       exclude: [

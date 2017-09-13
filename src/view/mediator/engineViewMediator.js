@@ -1,5 +1,7 @@
+import chroma from 'chroma-js'
 import ViewMediator from './viewMediator';
 import Magnet from '../../model/magnet';
+import Text from '../../model/text';
 
 export default class EngineViewMediator extends ViewMediator {
     constructor(engine, mediatorFactory) {
@@ -21,6 +23,18 @@ export default class EngineViewMediator extends ViewMediator {
         const magnet = new Magnet(this.simulationObject.sizeMagnet, this.simulationObject.positionMagnet, this.simulationObject.nbParticules);
         this.simulationObject.addMagnet(magnet);
         magnet.addParticules();
+
+        var promiseText = new Promise(function(resolve, reject) {
+            resolve(new Text());
+        });
+        var obj = this;
+        promiseText.then(function(text) {
+            console.log("test2")
+            text.magnet = magnet;
+            obj.addChild(text);
+            console.log("test3")
+        });
+        console.log("test1")
 
         this.createGUI();
     }
@@ -81,18 +95,10 @@ export default class EngineViewMediator extends ViewMediator {
         const newColorHex = newColor.get('rgb.r')*16*16*16*16 + newColor.get('rgb.g')*16*16 + newColor.get('rgb.b');
         this.thermosLeft.material.color.setHex(newColorHex);
         this.thermosRight.material.color.setHex(newColorHex);
-        console.log(this.simulationObject.temperature);
     }
 
     onFrameRenderered() {
-        //const magnet = this.simulationObject.magnet;
-        //magnet.rotation.z += 0.00001;
-
-        // 2 possibilités :
-        // - ajouter l'ensemble aimant/corde/pivot aux enfants de engine
-        // (en creant par exemple corde et pivot dans Magnet)
-        // - parvenir à ne pas exécuter frameRenderered directement sur Magnet,
-        // sans passer par les enfants
+        //console.log(this.childMediators.values());
         for (const childMediator of this.childMediators.values()) {
             childMediator.onFrameRenderered();
         }

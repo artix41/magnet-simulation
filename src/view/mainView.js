@@ -33,7 +33,9 @@ export default class MainView {
 
         window.addEventListener('resize', (e) => this.onWindowResize(), false);
 
+        console.log("test4")
         this.render();
+        console.log("test5")
     }
 
     render() {

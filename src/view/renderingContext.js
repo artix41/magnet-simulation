@@ -34,15 +34,6 @@ export default class RenderingContext {
         light2.position.set(-500, 1500, 1000);
         light3.position.set(500,300,0);
         light4.position.set(-500,300,0);
-		// light1.castShadow = true;
-		// light1.shadow.mapSize.width = 2048;
-		// light1.shadow.mapSize.height = 2048;
-		// var d = 1000;
-		// light1.shadow.camera.left = d;
-		// light1.shadow.camera.right = -d;
-		// light1.shadow.camera.top = d;
-		// light1.shadow.camera.bottom = -d;
-		// light1.shadow.camera.far = 2500;
 
         scene.add(light1);
         scene.add(light2);
