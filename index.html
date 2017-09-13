@@ -3,12 +3,42 @@
     <head>
         <meta charset="utf-8">
         <title>Curie Engine</title>
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="styles/main.css" />
     </head>
     <body>
+        <div id="panel">
+            <div class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                <div class="dropdown-menu">
+                    <h1>Ising Model</h1>
+                    <p>
+                        Paragraph 1 lorem ipsum
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <script src="node_modules/three/build/three.min.js"></script>
         <script src="node_modules/three/examples/js/controls/OrbitControls.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.min.js"></script>
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $('.dropdown').on('show.bs.dropdown', function() {
+                $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+            });
+            $('.dropdown').on('hide.bs.dropdown', function() {
+                $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+            });
+
+            $(document).keypress(function(e) {
+                if(e.which == 13) { /* If we press Enter */
+                    $(this).find('.dropdown-menu').first().stop(true, true).slideToggle();
+                }
+            });
+        </script>
+
         <script src="build/index.js"></script>
     </body>
 </html>

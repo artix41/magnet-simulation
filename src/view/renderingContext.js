@@ -19,6 +19,8 @@ export default class RenderingContext {
 
         const SPACE = 40, L = 8;
 
+        scene.background = new THREE.Color(0xd7f0f7);
+
         scene.fog = new THREE.FogExp2(0x9db3b5, 0.0005);
 
         controls.target.set(0, 120, 0);
