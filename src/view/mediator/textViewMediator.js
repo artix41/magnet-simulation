@@ -15,13 +15,16 @@ export default class TextViewMediator extends ViewMediator {
         });
     }
     loadText(id) {
+        this.removeCurrentText();
+        this.simulationObject.currentTextId = id;
+        this.object3D.add(this.textMeshList[id].top);
+        this.object3D.add(this.textMeshList[id].bottom);
+    }
+    removeCurrentText() {
         if(this.simulationObject.currentTextId >= 0) {
             this.object3D.remove(this.textMeshList[this.simulationObject.currentTextId].top);
             this.object3D.remove(this.textMeshList[this.simulationObject.currentTextId].bottom);
         }
-        this.simulationObject.currentTextId = id;
-        this.object3D.add(this.textMeshList[id].top);
-        this.object3D.add(this.textMeshList[id].bottom);
     }
     createText(font, id) {
         const currentText = this.simulationObject.listTexts[id];
@@ -61,7 +64,13 @@ export default class TextViewMediator extends ViewMediator {
     }
 
     onFrameRenderered() {
-        if (this.simulationObject.magnet.magnetization > 0) {
+        var obj = this;
+        if (this.simulationObject.currentTextId >= 0) {
+            this.textMeshList[this.simulationObject.currentTextId].top.traverse(function (object) { object.visible = obj.simulationObject.engine.displayText; } );
+            this.textMeshList[this.simulationObject.currentTextId].bottom.traverse(function (object) { object.visible = obj.simulationObject.engine.displayText; } );
+        }
+
+        if (this.simulationObject.magnet.magnetization > 0 && this.simulationObject.currentTextId == 0) {
             this.loadText(1)
         }
     }

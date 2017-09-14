@@ -8,6 +8,7 @@ export default class Engine extends SimulationObject {
         this.magnet = undefined;
         this.maxTemperature = 100;
         this.temperature = 0;
+        this.displayText = true;
 
         this.sizeFloor = {x: 1800, y: 0, z: 500};
         this.sizeMagnet = {x:200, y:75, z:75};

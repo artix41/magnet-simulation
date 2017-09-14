@@ -29,12 +29,10 @@ export default class EngineViewMediator extends ViewMediator {
         });
         var obj = this;
         promiseText.then(function(text) {
-            console.log("test2")
             text.magnet = magnet;
+            text.engine = engine;
             obj.addChild(text);
-            console.log("test3")
         });
-        console.log("test1")
 
         this.createGUI();
     }
@@ -88,6 +86,7 @@ export default class EngineViewMediator extends ViewMediator {
 		gui.add(this.simulationObject, 'temperature', 0,this.simulationObject.maxTemperature).step(1).name('Temperature').onFinishChange(function() {
             obj.onTemperatureChange();
         });
+        gui.add(this.simulationObject, 'displayText');
     }
 
     onTemperatureChange(side) {
