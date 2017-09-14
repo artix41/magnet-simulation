@@ -6,7 +6,7 @@ export default class MagnetViewMediator extends ViewMediator {
         super(magnet, mediatorFactory);
         this.simulationObject.addObserver("ParticuleAdded", (e) => this.onParticuleAdded(e));
         this.then = Date.now();
-        this.fps = 1;
+        this.fps = 10;
         this.dt = 1000 / this.fps;
 
         function f(x) {
@@ -134,6 +134,7 @@ export default class MagnetViewMediator extends ViewMediator {
         for (const childMediator of this.childMediators.values()) {
             childMediator.onFrameRenderered();
         }
+
         return magnetization;
     }
 

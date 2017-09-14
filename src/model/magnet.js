@@ -29,7 +29,14 @@ export default class Magnet extends SimulationObject {
 
     setMagnetization(m) {
         this.magnetization = m;
-        this.force = 100 * m*m*m;
+        const F = 100;
+        if (0 <= Math.abs(m) && Math.abs(m) < 0.5) {
+            this.force = 4 * F * Math.pow(Math.abs(m),3);
+        }
+        else {
+            this.force = Math.pow(Math.abs(m),0.1) / 2 * F * Math.pow(Math.abs(m)-0.5, 0.1) + F / 2;
+        }
+        this.force *= Math.sign(m);
     }
 
     addParticules() {
