@@ -46,7 +46,9 @@
                         This program simulates the Ising model using a Monte Carlo algorithm called
                         <a href="https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm">Metropolis Algorithm</a>,
                         consisting essentially in mixing randomly the spins at each iteration, and accepting the new situation
-                        only if its free energy is lower than before.
+                        either if $H$ has decreased or, with a certain probability growing with the temperature, if $H$ has increased.
+                        Thus, if T is high, new situations will be essentially random, while a low T will make situations with low H
+                        (which means aligned spins) more likely.
                     </p>
                 </div>
             </div>
