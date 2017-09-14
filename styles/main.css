@@ -39,11 +39,14 @@ body {
     margin: auto;
     background-color: white;
     width: 600px;
+    height: 90vh;
     border: 1px solid #d9d9d9;
     border-top: 0;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     margin-left: -1px; /* Don't ask me why, but it works... */
+    overflow-y: auto;
+
 }
 
 .dropdown-menu h1 {

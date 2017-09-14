@@ -20,7 +20,7 @@ export default class Text extends SimulationObject {
             {
                 id: 1,
                 size: this.defaultSize,
-                textTop: `The magnet has lost its magnetism and its components are now changing continuously of orientation.\n It means you passed what is called the Curie temperature, above which a magnet becomes paramagnetism`,
+                textTop: `The magnet has lost its magnetism and its components are now changing continuously of orientation.\n It means you passed what is called the Curie temperature, above which a magnet becomes paramagnetic`,
                 textBottom: `Press Enter to know more about the physics of the model`
             }
         ];
