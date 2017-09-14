@@ -13,7 +13,12 @@ export default class Engine extends SimulationObject {
         this.sizeFloor = {x: 1800, y: 0, z: 500};
         this.sizeMagnet = {x:200, y:75, z:75};
         this.positionMagnet = {x: 0, y: 0, z: 0};
-        this.nbParticules = {x:10, y:6, z:6};
+        this.nbParticules = {x:15, y:10, z:10};
+        this.marginParticules = {x:4, y:4, z:4};
+        this.sizeParticules = {
+            length: this.sizeMagnet.x / (this.nbParticules.x+1) - this.marginParticules.x,
+            radius: this.sizeMagnet.y / (this.nbParticules.y+1) - this.marginParticules.y
+        };
         this.sizeThermos = {x: 10, y: 500, z: this.sizeFloor.z};
         this.sizeMetal = {x: 20, y: this.sizeThermos.y * 0.9, z: this.sizeFloor.z / 2};
         this.positionMetal = {x: 300, y: 0, z: 0};

@@ -86,7 +86,7 @@ export default class MagnetViewMediator extends ViewMediator {
         const magnet = this.simulationObject;
 
         const force = magnet.force;
-        const g = 100;
+        const g = magnet.g;
         const l = magnet.engine.sizeRope.length;
         const m = magnet.mass;
         const prevTheta = magnet.prevTheta;

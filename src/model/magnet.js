@@ -12,6 +12,7 @@ export default class Magnet extends SimulationObject {
         this.position = position;
         this.mass = 1;
         this.kb = 0.1; // boltzmann constant
+        this.g = 100
         this.couplingConstant = 1;
         this.theta = 0;
         this.prevTheta = 0;
@@ -28,21 +29,20 @@ export default class Magnet extends SimulationObject {
 
     setMagnetization(m) {
         this.magnetization = m;
-        this.force = 100 * m;
+        this.force = 100 * m*m*m;
     }
 
     addParticules() {
-        const length = this.size.x / (this.nbParticules.x+2);
-        const marginX = this.size.x / (this.nbParticules.x+2)+2;
-        const marginY = this.size.y / this.nbParticules.y;
-        const marginZ = this.size.z / this.nbParticules.z;
+        const length = this.engine.sizeParticules.length + this.engine.marginParticules.x;
+        const diameter = this.engine.sizeParticules.radius + this.engine.marginParticules.y;
+
         for (var x = 0; x < this.nbParticules.x; x++) {
             for (var y = 0; y < this.nbParticules.y; y++) {
                 for (var z = 0; z < this.nbParticules.z; z++) {
                     const position = {
-                        x: length + x*marginX - this.size.x / 2,
-                        y: 5 + y*marginY - this.size.y / 2 - this.engine.sizeRope.length,
-                        z: 2 + z*marginZ - this.size.z / 2
+                        x: length + length*x - this.size.x / 2,
+                        y: diameter + y*diameter - this.size.y / 2 - this.engine.sizeRope.length,
+                        z: diameter + z*diameter - this.size.z / 2
                     };
                     const particule = new Particule(-1, position);
                     particule.magnet = this;

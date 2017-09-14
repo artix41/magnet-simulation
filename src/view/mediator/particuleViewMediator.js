@@ -8,11 +8,9 @@ export default class ParticuleViewMediator extends ViewMediator {
     makeObject3D() {
         const container = new THREE.Object3D();
 
-        const magnet = this.simulationObject.magnet;
-        const length = magnet.size.x / (magnet.nbParticules.x+2);
-        const radius = 4;
+        const sizeParticules = this.simulationObject.magnet.engine.sizeParticules;
 
-        var geometry = new THREE.CylinderGeometry(0, radius, length, 16, 2);
+        var geometry = new THREE.CylinderGeometry(0, sizeParticules.radius, sizeParticules.length, 16, 2);
 		//geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, length/2, 0));
 
         var color = (this.simulationObject.spin > 0) ? 0xff0000 : 0x0000ff;
