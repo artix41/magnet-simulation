@@ -32,11 +32,19 @@
                         \[
                         H = - J \sum_{i,j \: neighbors} S_i S_j
                         \]
-                        where $S_i$ is the spin of atom $i$ and $J$ a couping constant.
+                        where $S_i$ is the spin of atom $i$ (-1 for blue spin and 1 for red spin) and $J$ a couping constant.
                     </p>
+                    <h1>Curie Temperature</h1>
+                    If we call $M$ the average spin value (a number between -1 and 1, equal to -1 if all spins are blue and 1 if they are all red),
+                    it is shown experimentally that m evolves as a function of temperature according to this graph:
+                    <img src="images/explanations/curie-temperature.png" width="300px"/>
+
+                    The temperature at which the magnetism becomes 0 is called Curie temperature, and defines a phase transition.
+
+                    <h1>Simulation</h1>
                     <p>
                         This program simulates the Ising model using a Monte Carlo algorithm called
-                        <a href="https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm">Metropolis</a>,
+                        <a href="https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm">Metropolis Algorithm</a>,
                         consisting essentially in mixing randomly the spins at each iteration, and accepting the new situation
                         only if its free energy is lower than before.
                     </p>

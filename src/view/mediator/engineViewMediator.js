@@ -86,7 +86,7 @@ export default class EngineViewMediator extends ViewMediator {
 		gui.add(this.simulationObject, 'temperature', 0,this.simulationObject.maxTemperature).step(1).name('Temperature').onFinishChange(function() {
             obj.onTemperatureChange();
         });
-        gui.add(this.simulationObject, 'displayText');
+        gui.add(this.simulationObject, 'displayText').name("Display text");
     }
 
     onTemperatureChange(side) {
