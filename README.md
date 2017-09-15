@@ -1,7 +1,7 @@
 # Curie Pendulum
 3D Simulation of the Ising model, represented by a magnet on a pendulum, in order to see the evolution of magnetism.
 
-<img align="center" src="/images/screenshots/cold.png" width="350" /> <img align="center" src="/images/screenshots/hot.png" width="350" />
+<img align="center" src="/images/screenshots/cold.png" width="400" /> <img align="center" src="/images/screenshots/hot.png" width="400" />
 
 ## How to run it?
 
