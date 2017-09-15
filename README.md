@@ -1,5 +1,5 @@
 # Curie Pendulum
-3D Simulation of the Ising model, represented by a magnet on a pendulum, in order to see the evolution of magnetism with temperature.
+Educational 3D Simulation of the Ising model, represented by a magnet on a pendulum, in order to see and understand the evolution of magnetism with temperature.
 
 <img align="center" src="/images/screenshots/cold.png" width="425" /> <img align="center" src="/images/screenshots/hot.png" width="425" />
 
