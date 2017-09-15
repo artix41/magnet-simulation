@@ -27,7 +27,7 @@ export default class RenderingContext {
 
 		camera.position.x = 0;
 		camera.position.y = 500;
-		camera.position.z = 800;
+		camera.position.z = 870;
 
         renderer.setSize(width, height);
         renderer.shadowMap.enabled = true;

@@ -53,7 +53,7 @@ export default class TextViewMediator extends ViewMediator {
 
         textMesh.top.position.setZ(-700);
         textMesh.top.position.setY(750);
-        textMesh.top.position.setX(centerOffsetTop)
+        textMesh.top.position.setX(centerOffsetTop);
 
         textMesh.bottom.position.setZ(250);
         textMesh.bottom.position.setY(-200);
@@ -65,13 +65,37 @@ export default class TextViewMediator extends ViewMediator {
 
     onFrameRenderered() {
         var obj = this;
-        if (this.simulationObject.currentTextId >= 0) {
-            this.textMeshList[this.simulationObject.currentTextId].top.traverse(function (object) { object.visible = obj.simulationObject.engine.displayText; } );
-            this.textMeshList[this.simulationObject.currentTextId].bottom.traverse(function (object) { object.visible = obj.simulationObject.engine.displayText; } );
+        const temperature = this.simulationObject.magnet.engine.temperature;
+        const m = this.simulationObject.magnet.magnetization;
+        const id = this.simulationObject.currentTextId;
+        const theta = this.simulationObject.magnet.theta;
+        const prevTheta = this.simulationObject.magnet.prevTheta;
+        // Display checkbox
+        if (id >= 0) {
+            this.textMeshList[id].top.traverse(function (object) { object.visible = obj.simulationObject.engine.displayText; } );
+            this.textMeshList[id].bottom.traverse(function (object) { object.visible = obj.simulationObject.engine.displayText; } );
         }
 
-        if (this.simulationObject.magnet.magnetization > 0 && this.simulationObject.currentTextId == 0) {
-            this.loadText(1)
+        // Loading 1 from 0
+        if (((id == 0 || id == 4) && m > 0) || (id == 3 && m < 0) || (id == 2 && temperature >= 45)) {
+            this.loadText(1);
+        }
+
+        // Loading 2 (limits Ising) from 1
+        console.log(m);
+        if (id == 1) {
+            if (Math.abs(m) < 1 && temperature <= 10) {
+                this.loadText(2);
+            }
+        }
+
+        if (id == 1 || id == 2) {
+            if (m == 1) {
+                this.loadText(3);
+            }
+            if (m == -1) {
+                this.loadText(4);
+            }
         }
     }
 }
