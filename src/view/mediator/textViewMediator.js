@@ -82,7 +82,6 @@ export default class TextViewMediator extends ViewMediator {
         }
 
         // Loading 2 (limits Ising) from 1
-        console.log(m);
         if (id == 1) {
             if (Math.abs(m) < 1 && temperature <= 10) {
                 this.loadText(2);

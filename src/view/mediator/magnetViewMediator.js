@@ -115,9 +115,12 @@ export default class MagnetViewMediator extends ViewMediator {
                 for(var z = 0; z < nbParticules.z; z++) {
                     var sumNeighbours = 0;
                     for (var dep of [-1,1]) {
-                        sumNeighbours += matrixParticules[(x+dep+nbParticules.x)%nbParticules.x][y][z].spin;
-                        sumNeighbours += matrixParticules[x][(y+dep+nbParticules.y)%nbParticules.y][z].spin;
-                        sumNeighbours += matrixParticules[x][y][(z+dep+nbParticules.z)%nbParticules.z].spin;
+                        if (0 <= x+dep && x+dep < nbParticules.x)
+                            sumNeighbours += matrixParticules[x+dep][y][z].spin;
+                        if (0 <= y+dep && y+dep < nbParticules.y)
+                            sumNeighbours += matrixParticules[x][y+dep][z].spin;
+                        if (0 <= z+dep && z+dep < nbParticules.z)
+                            sumNeighbours += matrixParticules[x][y][z+dep].spin;
                     }
                     var deltaEnergy = matrixParticules[x][y][z].spin * 2 * J * sumNeighbours;
                     var beta = 1 / (kb * temperature);

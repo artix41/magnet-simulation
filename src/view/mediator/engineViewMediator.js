@@ -97,7 +97,6 @@ export default class EngineViewMediator extends ViewMediator {
     }
 
     onFrameRenderered() {
-        //console.log(this.childMediators.values());
         for (const childMediator of this.childMediators.values()) {
             childMediator.onFrameRenderered();
         }
