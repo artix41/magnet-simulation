@@ -21,16 +21,16 @@
                     </p>
                     <p>
                         More mathematically, we can prove that any system at a fixed temperature $T$ tends to
-                        minimize his Gibbs free energy, given by $G = H - TS$, where $H$ is the enthalpy of
-                        the system and S its entropy. When the temperature is low, minimizing $G$ essentially
-                        means minimizing H, while a high temperature increases the role of entropy,
-                        and the negative signs means $G$ will be minimized for a high entropy.
+                        minimize his free energy, given by $F = U - TS$, where $U$ is the energy of
+                        the system and S its entropy. When the temperature is low, minimizing $F$ essentially
+                        means minimizing $U$, while a high temperature increases the role of entropy,
+                        and the negative signs means $F$ will be minimized for a high entropy.
                         The Ising model consists in having an expression for the enthalpy only taking into
                         account interactions between each atom and its direct neighborhood (long-range interactions are neglected).
                         This expression has to be minimum when all the spins are aligned, and maximum in the most disordered case.
                         The simplest expression respecting those conditions is given by :
                         \[
-                        H = - J \sum_{i,j \: neighbors} S_i S_j
+                        U = - J \sum_{i,j \: neighbors} S_i S_j
                         \]
                         where $S_i$ is the spin of atom $i$ (-1 for blue spin and 1 for red spin) and $J$ a couping constant.
                     </p>
@@ -46,8 +46,8 @@
                         This program simulates the Ising model using a Monte Carlo algorithm called
                         <a href="https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm">Metropolis Algorithm</a>,
                         consisting essentially in mixing randomly the spins at each iteration, and accepting the new situation
-                        either if $H$ has decreased or, with a certain probability growing with the temperature, if $H$ has increased.
-                        Thus, if T is high, new situations will be essentially random, while a low T will make situations with low H
+                        either if $U$ has decreased or, with a certain probability growing with the temperature, if $U$ has increased.
+                        Thus, if $T$ is high, new situations will be essentially random, while a low $T$ will make situations with low $U$
                         (which means aligned spins) more likely.
                     </p>
                 </div>
