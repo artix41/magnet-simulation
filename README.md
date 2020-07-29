@@ -3,6 +3,7 @@ Educational 3D Simulation of the Ising model, represented by a magnet on a pendu
 
 <img align="center" src="/images/screenshots/cold.png" width="425" /> <img align="center" src="/images/screenshots/hot.png" width="425" />
 
+Accessible at http://ising.data-ensta.fr/
 ## How to run it?
 
 You need to have nodejs and npm installed on your computer. On a debian/ubuntu computer, you can install them with:
